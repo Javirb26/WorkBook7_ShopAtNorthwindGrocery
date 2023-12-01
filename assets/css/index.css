@@ -1,0 +1,80 @@
+/* COLOR PALLETE FOR WEBSITE */
+:root {
+    --main-blue: rgb(103,136,237);
+    --medium-blue: rgb(153,186,254);
+    --light-blue: rgb(200,215,239);
+    --light-orange: rgb(237, 208, 193);
+    --medium-orange: rgb(246, 167, 137);
+    --main-orange: rgb(225,104,82);
+}
+
+.main-blue {
+    background-color: var(--main-blue);
+}
+.main-blue-text {
+    color: var(--main-blue);
+}
+
+.medium-blue {
+    background-color: var(--medium-blue);
+}
+
+.medium-blue-text {
+    color: var(--medium-blue);
+}
+
+.light-blue {
+    background-color: var(--light-blue);
+}
+.light-blue-text {
+    color: var(--light-blue);
+}
+
+.light-orange {
+    background-color: var(--light-orange);
+}
+.light-orange-text {
+    color: var(--light-orange);
+}
+
+.medium-orange {
+    background-color: var(--medium-orange);
+}
+
+.medium-orange-text {
+    color: var(--medium-orange);
+}
+
+.main-orange {
+    background-color: var(--main-orange);
+}
+.main-orange-text {
+    color: var(--main-orange);
+}
+
+/* END OF COLOR PALLETE */
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* Custom primary button color */
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: var(--medium-orange) !important;
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+    background-color: whitesmoke !important;
+}
+/* END OF: Custom primary button color */
+
+.bg-img {
+    min-height: 80vh;
+    background-image: url(/assets/images/northwind.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
