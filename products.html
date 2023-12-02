@@ -46,7 +46,33 @@
     
 
     <main>
-     
+     <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class=" my-5 bg-light p-5 rounded-3">
+                <div class="my-3">
+                    <select class="form-control-lg" id="selectCategoryEl">
+                        <option value="" class="">Select one...</option>
+                        <option value="" class="">Search by category</option>
+                        <option value="" class="">View All</option>
+                    </select>
+                </div>
+                
+
+                <div id="specificContainerEl" class="my-3 ms-5">
+                    <select class="form-control-lg d-none" id="selectSpecific">
+                        
+                    </select>
+                </div>
+                
+            </div>
+            
+        </div>
+        <div>
+            <ul id="output">
+
+            </ul>
+        </div>
+     </div>
     </main>
 
     <!-- Footer -->
@@ -170,5 +196,5 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"
   ></script>
-  <script src="assests/index.js"></script>
+  <script src="assets/js/index.js"></script>
 </html>
