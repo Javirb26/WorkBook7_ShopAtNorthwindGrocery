@@ -46,7 +46,10 @@
     
 
     <main>
-     
+      <div>
+        <h2 id="productTitle"></h2>
+        <p id="productDescription"></p>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -170,5 +173,20 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"
   ></script>
-  <script src="assests/index.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+
+    // Make a request to retrieve product details by ID
+    fetch(`http://localhost:8081/api/products/${productId}`)
+      .then((res)=>res.json())
+      .then((product) => {
+        const productTitleElement = document.getElementById('productTitle');
+        const productDescriptionElement = document.getElementById('productDescription');
+        productTitleElement.textContent = `:${product.productName}`;
+        productDescriptionElement.textContent = `Supplier: ${product.supplier}, Price: $${product.unitPrice}`;
+      })
+
+  </script>
 </html>
