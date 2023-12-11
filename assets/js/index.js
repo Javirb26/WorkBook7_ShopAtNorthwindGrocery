@@ -1,77 +1,91 @@
+// products search page
+/*
+    search and view products
+    users can click on product from list and link takes you to details.html
+
+    dropdown that contains static options: 
+        select one, search by category, and view all
+    
+    view all shows all products and a few text w/ link
+
+    search by category populates second select el
+        select el #2 contains category names
+        if user selects a category then products in that category are shown
+*/
+
 window.onload = () => {
-    searchCat();
+    
+    viewAll();
+    let defaultOption = document.getElementById('default')
+
 }
 
-const categorySelectEl = document.getElementById('selectCategoryEl');
-const selectSpecificEl = document.getElementById('selectSpecific');
-const outputEl = document.getElementById('output')
+// view all products
+let viewAll = () => {
+    let selectEl = document.getElementById('selectCategoryEl');
+    let selectSpecificEl = document.getElementById('selectSpecific');
+    let outputEl = document.getElementById('output')    
+    let allCatUrl = 'http://localhost:8081/api/categories'
+    let allProductsURL = 'http://localhost:8081/api/products';
 
-let searchCat = () => {
-    categorySelectEl.onchange = () => {
-        // Resetting previous selections and outputs
-        selectSpecificEl.innerHTML = '';
-        outputEl.innerHTML = '';
-        selectSpecificEl.classList.toggle('d-none', categorySelectEl.selectedIndex === 0);
-
-        if (categorySelectEl.selectedIndex === 1) {
-
-            const defaultOption = document.createElement('option');
-            defaultOption.textContent = "Please Choose a Category";
-            defaultOption.value = "";
-            selectSpecificEl.appendChild(defaultOption);
-
-
-            fetch('http://localhost:8081/api/categories')
-                .then((res) => res.json())
-                .then((categories) => {
-                    categories.forEach(category => {
-                        const optionEl = document.createElement('option');
-                        optionEl.value = category.categoryId;
-                        optionEl.textContent = category.name;
-                        selectSpecificEl.appendChild(optionEl);
+    selectEl.onchange = () => {
+        if (selectEl.value === '1') {
+            outputEl.innerHTML = '';
+            selectSpecificEl.classList.toggle('d-none');
+            fetch(allCatUrl)
+                .then((res)=>res.json())
+                .then((allCategories)=>{
+                    console.log(allCategories);
+                    allCategories.forEach((category)=>{
+                        console.log(category.name);
+                        let option = document.createElement('option');
+                        option.value = category.categoryId
+                        option.textContent = category.name;
+                        selectSpecificEl.appendChild(option); 
+                    })
+                })
+        }
+        else if (selectEl.value === '2') {
+            outputEl.innerHTML = '';
+            fetch(allProductsURL)
+                .then((res)=>res.json())
+                .then((allProducts)=>{
+                    console.log(allProducts);
+                    allProducts.forEach(product => {
+                        let li = document.createElement('li');
+                        li.innerHTML = `${product.productName} `
+                        li.value = product.productId;
+                        const link = document.createElement('a')
+                        link.innerHTML = 'see details'
+                        link.href = `details.html?id=${product.productId}`
+                        li.appendChild(link)
+                        outputEl.appendChild(li);
                     });
-                });
-        } else if (categorySelectEl.selectedIndex === 2) {
 
-            selectSpecificEl.innerHTML = '';
-            selectSpecificEl.classList.add('d-none');
-
-            fetch('http://localhost:8081/api/products')
-                .then((res) => res.json())
-                .then((products) => {
-                    for (let product of products) {
-                        // Create an <option> element and append it to the select
-                        const listEl = document.createElement('li');
-                        const detailLink = document.createElement('a');
-                        detailLink.href = `../details.html?id=${product.productId}`;
-                        detailLink.innerHTML = 'See Details';
-                        listEl.value = product.productId;
-                        listEl.textContent = `${product.productName}: $${product.unitPrice}`;
-                        listEl.appendChild(detailLink);
-                        outputEl.appendChild(listEl);
-                    }
-                });
+                })
         }
     }
 
-
     selectSpecificEl.onchange = () => {
-        let selectedCategoryId = selectSpecificEl.value;
+        console.log(selectSpecificEl.value);
         outputEl.innerHTML = '';
-
-        fetch(`http://localhost:8081/api/products`)
-            .then((res) => res.json())
-            .then((products) => {
-                let productsToShow = products.filter(product => product.categoryId.toString() === selectedCategoryId);
-                productsToShow.forEach(product => {
-                    const listEl = document.createElement('li');
-                    const detailLink = document.createElement('a');
-                    detailLink.href = `../details.html?productId=${product.productId}`;
-                    detailLink.innerHTML = 'See Details';
-                    listEl.textContent = `${product.productName}: $${product.unitPrice}`;
-                    listEl.appendChild(detailLink);
-                    outputEl.appendChild(listEl);
-                });
-            });
+        fetch(allProductsURL)
+            .then((res)=>res.json())
+            .then((allProducts)=>{
+                let selectedCategory = allProducts.filter((product => {
+                    return product.categoryId === Number(selectSpecificEl.value)
+                }))
+                console.log(selectedCategory);
+                selectedCategory.forEach((product)=> {
+                    let li = document.createElement('li');
+                    li.innerHTML = `${product.productName} `
+                    li.value = product.productId;
+                    let link = document.createElement('a');
+                    link.innerHTML = 'see details'
+                    link.href = `details.html?id=${product.productId}`
+                    li.appendChild(link)
+                    outputEl.appendChild(li);
+                })
+            })
     }
 }
