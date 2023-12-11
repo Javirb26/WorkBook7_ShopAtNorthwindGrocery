@@ -51,16 +51,16 @@
             <div class=" my-5 bg-light p-5 rounded-3">
                 <div class="my-3">
                     <select class="form-control-lg" id="selectCategoryEl">
-                        <option value="" class="">Select one...</option>
-                        <option value="" class="">Search by category</option>
-                        <option value="" class="">View All</option>
+                        <option value="0" class="" id="default" selected>Select one...</option>
+                        <option value="1" class="" id="category">Search by category</option>
+                        <option value="2" class="" id="view-all">View All</option>
                     </select>
                 </div>
                 
 
                 <div id="specificContainerEl" class="my-3 ms-5">
                     <select class="form-control-lg d-none" id="selectSpecific">
-                        
+                        <option value="none">Select Category</option>
                     </select>
                 </div>
                 
